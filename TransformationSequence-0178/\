@@ -1,0 +1,45 @@
+package main
+
+import "fmt"
+
+func main() {
+	var n int
+	fmt.Scan(&n)
+	numbers := make([]int, n)
+	for i := 0; i < n; i++ {
+		fmt.Scan(&numbers[i])
+	}
+	count, num := maxNumber(numbers)
+	result := []int{}
+	for i := 0 ; i < len(n); i++ {
+		if numbers[i] != num {
+		result = append(result, numbers[i])
+		}	
+	}
+	for i := 0; i < count; i++ {
+		result = append(result, num)
+	}
+	for i := 0; i < len(result); i++ {
+		fmt.Printf("%d ", result[i])
+	}
+	
+}
+
+func maxNumber(nums []int) int {
+	count := make(map[int]int)
+	for i := 0; i < len(nums); i++ {
+		count[nums[i]]++
+	}
+	counts := 1
+	result := nums[0]
+	for i, val := range count {
+		if counts < val {
+			counts = val
+			result = i
+		} else if counts == val && i < result {
+			counts = val
+			result = i
+		}
+	}
+	return counts,result
+}
