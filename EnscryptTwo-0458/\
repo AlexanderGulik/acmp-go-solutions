@@ -1,0 +1,48 @@
+package main
+
+import "fmt"
+
+func main() {
+	var h int
+	fmt.Scan(&h)
+	line := make([]int, h)
+	for i := 0; i < h; i++ {
+		fmt.Scan(&line[i])
+	}
+	var str string
+	fmt.Scan(&str)
+	runes := []rune(str)
+	lenStr := len(runes) / h
+	matrix := make([][]rune, h)
+	for i := 0; i < h; i++ {
+		matrix[i] = make([]rune, lenStr)
+		for j := 0; j < lenStr; j++ {
+			matrix[i][j] = ' '
+		}
+	}
+
+	for i := 0; i < h; i++ {
+		// как мне разделить строку на lenStr и добавлить на ряд line[i] в matrix
+		start := i * lenStr
+		end := start + lenStr
+		if end > len(runes) {
+			end = len(runes)
+		}
+		chunk := runes[start:end]
+
+		a := line[i] - 1
+		if a >= 0 && a < h {
+			for j := 0; j < len(chunk); j++ {
+				if j < len(matrix[a]) {
+					matrix[a][j] = rune(chunk[j])
+				}
+			}
+		}
+	}
+	for j := 0; j < h; j++ {
+		for i := 0; i < len(matrix); i++ {
+			fmt.Print(string(matrix[i][j]))
+		}
+
+	}
+}
